@@ -46,10 +46,13 @@ const links = [ {
      </div>
      </aside>
      <div class="w-4/5">
-        <header class="py-3">
+        <header class="py-3 flex justify-end">
             <div class="w-[14rem]">
-            <UInput icon="i-heroicons-magnifying-glass-20-solid" size="md" color="white" :trailing="false" rounded="rounded-full" placeholder="search..."/>
+            <UInput class="bg-gray-100" icon="i-heroicons-magnifying-glass-20-solid" size="md" color="white" :trailing="false" rounded="rounded-full" placeholder="search..."/>
             </div>
+            <span class="bg-gray-100  h-8 w-8 flex items-center justify-center rounded-full mx-4">
+                <UIcon name="i-heroicons-bell-alert" class="text-gray-500 text-lg" />
+            </span>
         </header>
         <section class="bg-gray-100 w-full h-full">
             <slot />
