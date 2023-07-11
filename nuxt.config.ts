@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     download: true,
     families:{
       'Open+Sans': true,
+      Poppins: true,
     }
   }
 })

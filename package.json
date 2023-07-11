@@ -13,7 +13,10 @@
     "@nuxt/devtools": "latest",
     "@nuxthq/ui": "^2.5.0",
     "@nuxtjs/google-fonts": "^3.0.1",
+    "@tanstack/vue-query": "^4.29.20",
     "@types/node": "^18.16.19",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
     "nuxt": "^3.6.2"
   }
 }

@@ -74,9 +74,15 @@ watchEffect(() => {
                 <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" chip-color="primary" chip-text="" chip-position="top-right" size="sm" />
             </span>
         </header>
-        <section class="bg-gray-100 dark:bg-gray-800 w-full h-full rounded-tl-2xl p-4">
+        <section class="bg-gray-100 dark:bg-gray-800 w-full h-full rounded-tl-2xl p-4 pt-6">
             <slot />
         </section>
      </div>
     </main>
 </template>
+
+<style>
+*{
+  font-family: 'Poppins', sans-serif;
+}
+</style>
