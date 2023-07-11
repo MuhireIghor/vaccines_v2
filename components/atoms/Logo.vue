@@ -1,7 +1,7 @@
 <template>
     <NuxtLink to="/">
         <span class="flex space-x-2 items-center">
-        <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" width="141" height="92" viewBox="0 0 141 92" fill="none">
+        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="141" height="92" viewBox="0 0 141 92" fill="none">
             <path d="M87.027 62.6607C105.863 52.0931 129.695 58.6365 140.494 77.3408L124.242 86.7237C105.32 97.6486 81.1189 91.0288 70.3916 71.9937L87.027 62.6607Z" fill="black"/>
             <path d="M80.1361 55.2525C90.8965 36.6151 114.728 30.2294 133.365 40.9897L123.624 57.8627C112.863 76.5001 89.0319 82.8857 70.3945 72.1254L80.1361 55.2525Z" fill="black" fill-opacity="0.8"/>
             <path d="M69.5518 53.4469C69.5518 30.8434 87.8756 12.5195 110.479 12.5195V31.6189C110.479 54.2225 92.1553 72.5463 69.5518 72.5463V53.4469Z" fill="black" fill-opacity="0.8"/>
