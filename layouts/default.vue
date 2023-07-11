@@ -1,7 +1,8 @@
 import { variants } from '../.nuxt/tailwind.config';
 
 <script setup>
-const selected = ref(false)
+const isDark = ref(false)
+const colorMode = useColorMode()
 
 const links = [ {
   label: 'Dashboard',
@@ -35,6 +36,14 @@ const links = [ {
 
 ]
 
+watchEffect(() => {
+    if (isDark.value) {
+        colorMode.preference = 'dark'
+    } else {
+        colorMode.preference = 'light'
+    }
+})
+
 </script>
 
 <template>
@@ -52,20 +61,20 @@ const links = [ {
      <div class="w-4/5">
         <header class="py-3 flex justify-end items-center">
             <div class="w-[14rem]">
-                <div class="bg-gray-100 rounded-full"><UInput  variant="none"  icon="i-heroicons-magnifying-glass-20-solid" size="md"  :trailing="false" rounded="rounded-full" placeholder="search..."/></div>
+                <div class="bg-gray-100 dark:bg-gray-800  rounded-full"><UInput  variant="none"  icon="i-heroicons-magnifying-glass-20-solid" size="md"  :trailing="false" rounded="rounded-full" placeholder="search..."/></div>
             </div>
-            <span class="bg-gray-100  h-8 w-8 flex items-center justify-center rounded-full ml-6 mr-2 relative">
+            <span class="bg-gray-100 dark:bg-gray-800   h-8 w-8 flex items-center justify-center rounded-full ml-6 mr-2 relative">
                 <UIcon name="i-heroicons-bell-alert" class="text-gray-500 text-lg" />
                 <span class="block absolute w-[6px] h-[6px] bg-red-500 rounded-full top-2 right-2 border border-white"></span>
             </span>
             <span class="block mx-2">
-                <UToggle color="sky"  on-icon="i-heroicons-moon" off-icon="i-heroicons-sun" v-model="selected"  />
+                <UToggle color="sky"  on-icon="i-heroicons-moon" off-icon="i-heroicons-sun" v-model="isDark"  />
             </span>
             <span class="mr-3">
                 <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" chip-color="primary" chip-text="" chip-position="top-right" size="sm" />
             </span>
         </header>
-        <section class="bg-gray-100 w-full h-full rounded-tl-2xl p-4">
+        <section class="bg-gray-100 dark:bg-gray-800 w-full h-full rounded-tl-2xl p-4">
             <slot />
         </section>
      </div>
