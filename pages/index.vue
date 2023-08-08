@@ -17,6 +17,7 @@ function getPartOfDay(time: string): string {
     return "Night";
   }
 }
+
 </script>
 
 <template>

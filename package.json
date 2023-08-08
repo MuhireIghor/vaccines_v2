@@ -18,5 +18,12 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "nuxt": "^3.6.2"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "nuxt3-vuex-module": "^1.0.12",
+    "pinia": "^2.1.6",
+    "vuex": "^4.1.0",
+    "zod": "^3.21.4"
   }
 }
