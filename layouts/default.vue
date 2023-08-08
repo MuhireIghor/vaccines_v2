@@ -1,6 +1,6 @@
-import { variants } from '../.nuxt/tailwind.config';
 
 <script setup>
+import { variants } from '../.nuxt/tailwind.config';
 const isDark = ref(false)
 const colorMode = useColorMode()
 
