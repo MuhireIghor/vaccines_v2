@@ -77,6 +77,7 @@ watchEffect(() => {
         <section class="bg-gray-100 dark:bg-gray-800 w-full h-full rounded-tl-2xl p-4 pt-6">
             <slot />
         </section>
+
      </div>
     </main>
 </template>

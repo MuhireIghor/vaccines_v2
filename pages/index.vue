@@ -17,7 +17,14 @@ function getPartOfDay(time: string): string {
     return "Night";
   }
 }
-
+useHead(()=>{
+    return{
+        title: `VACCINE | HOME`
+    }
+})
+definePageMeta({
+  middleware:'auth'
+})
 </script>
 
 <template>

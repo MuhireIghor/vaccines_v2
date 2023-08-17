@@ -1,21 +1,14 @@
 <script setup>
-import { useVaccineStore } from '../../stores/myStore'
-import Table from '../../components/tables/vaccineTable.vue'
+const router = useRoute(    );
+const isEditable = ref(false);
+const editVaccine= () => {
+  isEditable.value = true;
+};
 
-onMounted(() => {
-  useHead(()=>{
-      return{
-          title: ` Vaccine | VACCINES`
-      }
-  })
-})
-const isOpen = ref(false);
+
+// form props
+
 const form = ref()
-
-//vax store
-const store = useVaccineStore()
-
-
 const state = ref({
   category: '',
   created_on: '',
@@ -25,25 +18,37 @@ const state = ref({
   purpose: '',
   updated_on: '',
 })
-const handleSubmit = (vaxData)=>{
-    console.log('Form Sumbitted',vaxData)
-    store.createVaccine(vaxData)
-}
+
+
+//router params
+const vaxId = router.params.id;
+onMounted(() => {
+  useHead(() => {
+    return {
+      title: `VACCINE | ${vaxId}`,
+    };
+  });
+});
 </script>
 <template>
-    <div>
-      <div class="flex justify-between">
-        <h1 class="text-2xl font-bold">Vaccines</h1>
-        <UButton
-          icon="i-heroicons-plus"
-          size="xl"
-          color="sky"
-          @click="isOpen = true"
-          >Add Vaccine</UButton
-        >
+  <div class="flex flex-col p-12">
+    <h1 class="text-2xl font-bold" v-if="!isEditable">Vaccine Details</h1>
+    <template v-if="!isEditable">
+      <div :class="`${!isEditable && 'mt-12'}`">
+        <div class="space-y-4">
+          <p class="font-semibold">Vaccine Name :</p>
+          <p class="font-semibold">Category :</p>
+          <p class="font-semibold">Created On :</p>
+          <p class="font-semibold">Updated On :</p>
+          <p class="font-semibold">Expire Date :</p>
+          <p class="font-semibold">Purpose :</p>
+          <p class="font-semibold">Period :</p>
+      
+        </div>
       </div>
-      <UModal v-model="isOpen" :transition="false" >
-          <UForm
+    </template>
+    <template v-else> 
+        <UForm
       :ref="form"
       :state="state"
       @submit.prevent="handleSubmit(state)"
@@ -78,10 +83,14 @@ const handleSubmit = (vaxData)=>{
       </UButton>
   
   </div>
-    </UForm>
-      </UModal>
-      <div class="mt-12">
-<Table />
-      </div>
-    </div>
-  </template>
+    </UForm>   
+    </template>
+    <UButton
+      class="mx-auto px-12 "
+      @click="editVaccine"
+      v-if="!isEditable"
+      color="sky"
+      >Edit</UButton
+    >
+  </div>
+</template>

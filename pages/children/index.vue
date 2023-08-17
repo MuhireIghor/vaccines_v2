@@ -1,19 +1,64 @@
 <script setup>
+import Table from '../../components/tables/ChildrenTable.vue'
 const isOpen = ref(false);
 const form = ref()
-
+const districts = [
+  'Gasabo',
+  'Kicukiro',
+  'Nyarugenge',
+  'Bugesera',
+  'Gatsibo',
+  'Kayonza',
+  'Kirehe',
+  'Ngoma',
+  'Nyagatare',
+  'Rwamagana',
+  'Ruhango',
+  'Gisagara',
+  'Huye',
+  'Kamonyi',
+  'Muhanga',
+  'Nyamagabe',
+  'Nyanza',
+  'Nyaruguru',
+  'Ruhango',
+  'Burera',
+  'Gicumbi',
+  'Musanze',
+  'Rulindo',
+  'Karongi',
+  'Ngororero',
+  'Nyabihu',
+  'Nyamasheke',
+  'Rubavu',
+  'Rusizi',
+  'Rutsiro'
+]
+const isError = ref(false)
 const state = ref({
-  category: '',
-  createdOn: '',
-  expireDate: '',
-  name: '',
-  period: '',
-  purpose: '',
-  updatedOn: '',
+birth_location:'',
+code:'',
+father_names:'',
+mother:'',
+person:'',
+taken_vaccines:'',
 })
-const handleSubmit = ()=>{
-    console.log('Form Sumbitted')
+const handleSubmit = (stateData)=>{
+  isError.value = false
+if(state.value.birth_location == '' && state.value.code !='' && state.value.father_names != '' && state.value.mother !='' && state.value.person != '' && state.value.taken_vaccines != ''){
+  console.log(`form submitted`,stateData)
 }
+else{
+isError.value = true
+}
+}
+onMounted(() => {
+  useHead(()=>{
+      return{
+          title: ` Vaccine | CHILDREN`
+      }
+  })
+})
 </script>
 <template>
     <div>
@@ -36,27 +81,26 @@ const handleSubmit = ()=>{
   
     >
     <p class="text-2xl font-bold">Add Child</p>
-      <UFormGroup label="vaccine Name" name="vname" required >
-        <UInput color="sky" v-model="state.name" />
+    <p v-if="isError" class="text-[red]">Fill all required fields*</p>
+      <UFormGroup label="Father Name" name="fname" required >
+        <UInput color="sky" v-model="state.father_names" />
       </UFormGroup>
-      <UFormGroup label="Vaccine Category" name="vcategory" required >
-        <UInput color="sky" v-model="state.category" />
+      <UFormGroup label="Mother Name" name="mname" required >
+        <UInput color="sky" v-model="state.mother" />
       </UFormGroup>
-      <UFormGroup label="Purpose" name="purpose" required>
-        <UInput color="sky" v-model="state.purpose" type="text" />
+      <UFormGroup label="Name" name="cname" required>
+        <UInput color="sky" v-model="state.person" type="text" />
       </UFormGroup>
-      <UFormGroup label="Created On" name="createdOn" required>
-        <UInput color="sky" v-model="state.createdOn" type="date" />
+      <UFormGroup label="Code" name="code" required>
+        <UInput color="sky" v-model="state.code" type="text" />
       </UFormGroup>
-      <UFormGroup label="updated On" name="updatedOn" required>
-        <UInput color="sky" v-model="state.updatedOn" type="date" />
+      <UFormGroup label="Birth Location" name="bLocation" required>
+        <USelectMenu color="sky" v-model="state.birth_location" :options="districts"  placeholder="Select Birth Location" />
       </UFormGroup>
-      <UFormGroup label="Expire Date" name="expireDate" required>
-        <UInput color="sky" v-model="state.expireDate" type="date" />
+      <UFormGroup label="Taken Vaccines" name="tvxs" required="">
+<UInput color="sky" v-model="state.taken_vaccines" type="text" />
       </UFormGroup>
-      <UFormGroup label="Period" name="period" required>
-        <UInput color="sky" v-model="state.period" type="text" />
-      </UFormGroup>
+  
   <div class="w-full flex justify-center">
       <UButton type="submit" color="sky" @click="handleSubmit(state)">
         Submit
@@ -66,6 +110,8 @@ const handleSubmit = ()=>{
     </UForm>
       </UModal>
   
-      <div></div>
+      <div class="mt-12">
+        <Table />
+      </div>
     </div>
   </template>

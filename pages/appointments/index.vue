@@ -1,19 +1,31 @@
 <script setup>
+import Table from '../../components/tables/AppointmentTable.vue'
 const isOpen = ref(false);
 const form = ref()
-
+const isError = ref(false)
 const state = ref({
-  category: '',
-  createdOn: '',
-  expireDate: '',
-  name: '',
-  period: '',
-  purpose: '',
-  updatedOn: '',
+  date_of_appointment: '',
+  description: '',
+  health_care: '',
+  person: '',
+  taken_vaccines: ''
 })
-const handleSubmit = ()=>{
-    console.log('Form Sumbitted')
+const handleSubmit = (stateData)=>{
+  isError.value = false
+    if(state.value.date_of_appointment != '' && state.value.description != '' && state.value.health_care!='' && state.value.person!=''&& state.value.taken_vaccines!=''){
+console.log(`form submitted`,stateData)
+    }
+    else{
+      isError.value = true
+    }
 }
+onMounted(() => {
+  useHead(()=>{
+      return{
+          title: ` Vaccine | APPOINTMENTS`
+      }
+  })
+})
 </script>
 <template>
     <div>
@@ -36,27 +48,23 @@ const handleSubmit = ()=>{
   
     >
     <p class="text-2xl font-bold">Add Appointment</p>
-      <UFormGroup label="vaccine Name" name="vname" required >
-        <UInput color="sky" v-model="state.name" />
+    <p v-if="isError" class="text-[red]">Fill all required fields*</p>
+      <UFormGroup label="Date Of Appointment" name="pname" required >
+        <UInput color="sky" v-model="state.date_of_appointment" />
       </UFormGroup>
-      <UFormGroup label="Vaccine Category" name="vcategory" required >
-        <UInput color="sky" v-model="state.category" />
+      <UFormGroup label="Appointment Description" name="appDesc" required >
+        <UInput color="sky" v-model="state.description" />
       </UFormGroup>
-      <UFormGroup label="Purpose" name="purpose" required>
-        <UInput color="sky" v-model="state.purpose" type="text" />
+      <UFormGroup label="Health Care" name="hcare" required>
+        <UInput color="sky" v-model="state.health_care" type="date" />
       </UFormGroup>
-      <UFormGroup label="Created On" name="createdOn" required>
-        <UInput color="sky" v-model="state.createdOn" type="date" />
+      <UFormGroup label="Person" name="person" required>
+        <UInput color="sky" v-model="state.person"  />
       </UFormGroup>
       <UFormGroup label="updated On" name="updatedOn" required>
-        <UInput color="sky" v-model="state.updatedOn" type="date" />
+        <UInput color="sky" v-model="state.taken_vaccines"/>
       </UFormGroup>
-      <UFormGroup label="Expire Date" name="expireDate" required>
-        <UInput color="sky" v-model="state.expireDate" type="date" />
-      </UFormGroup>
-      <UFormGroup label="Period" name="period" required>
-        <UInput color="sky" v-model="state.period" type="text" />
-      </UFormGroup>
+  
   <div class="w-full flex justify-center">
       <UButton type="submit" color="sky" @click="handleSubmit(state)">
         Submit
@@ -65,7 +73,8 @@ const handleSubmit = ()=>{
   </div>
     </UForm>
       </UModal>
-  
-      <div></div>
+      <div class="mt-12">
+<Table />
+      </div>
     </div>
   </template>
