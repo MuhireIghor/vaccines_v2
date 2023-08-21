@@ -1,8 +1,8 @@
-import { useUserStore } from "../stores/myStore";
+import { usePersonStore } from "../stores/myStore";
 
 export default function (){
-    const store = useUserStore();
-    if(!store.user.id){
+    const store = usePersonStore();
+    if(!store.person.id){
 return navigateTo('/auth/signup')
     }
 }

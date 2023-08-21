@@ -1,145 +1,120 @@
 <script setup>
-const columns = [{
-  key: 'id',
-  label: 'ID'
-}, {
-  key: 'first_name',
-  label: 'First Name',
-  sortable: true
-}, {
-  key: 'second_name',
-  label: 'Second Name',
-  sortable: true
-}, {
-  key: 'gender',
-  label: 'gender',
-  sortable: true
-}, {
-  key: 'email',
-  label: 'Email',
-  sortable: true,
-  direction: 'desc'
-}, {
-  key: 'current_location',
-  label: 'Current Location',
-  sortable: true
-},
-{
-  key: 'actions'
-}]
+import { deleteUser } from "../../services/axios";
+const { people } = defineProps(["people"]);
+console.log(people);
+const columns = [
+  {
+    key: "person_id",
+    label: "ID",
+  },
+  {
+    key: "username",
+    label: "Username",
+  },
+  {
+    key: "actions",
+  },
+];
 
-const selectedColumns = ref([...columns])
-let people = [
-  {
-  id: 1,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Gasabo',
-  email: 'lindsay.walton@example.com',
-}, 
-  {
-  id: 2,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Kimironko',
-  email: 'lindsay.walton@example.com',
-}, 
-  {
-  id: 3,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Nyabihu',
-  email: 'lindsay.walton@example.com',
-}, 
-  {
-  id: 4,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Nyarugenge',
-  email: 'lindsay.walton@example.com',
-}, 
-  {
-  id: 5,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Nyabihu',
-  email: 'lindsay.walton@example.com',
-}, 
-  {
-  id: 6,
-  first_name: 'Lindsay',
-  second_name: 'Walton',
-  gender: 'Male',
-  current_location: 'Bugesera',
-  email: 'lindsay.walton@example.com',
-}, 
-]
-const router = useRouter()
+const selectedColumns = ref([...columns]);
+
+const router = useRouter();
 //actions buttons
 const items = (row) => [
-  [{
-    label: 'Update',
-   
-    icon: 'i-heroicons-pencil-square-20-solid',
-    click: () => {
-      console.log('Edit', row.id)
-router.push(`/users/${row.id}`)
-  }}],[{
-    label: 'Delete',
-    icon: 'i-heroicons-trash-20-solid',
-    click: () => {
-      people = people.filter((people)=>people.id != row.id)
-      console.log(`now people are ${people.length}`)
-    }
-  }]]
+  [
+    {
+      label: "Update",
+
+      icon: "i-heroicons-pencil-square-20-solid",
+      click: () => {
+        console.log("Edit", row.id);
+        router.push(`/users/${row.id}`);
+      },
+    },
+  ],
+  [
+    {
+      label: "Delete",
+      icon: "i-heroicons-trash-20-solid",
+      click: () => {
+        deleteUser(row.id);
+      },
+    },
+  ],
+];
 
 //pagination
 
-const page = ref(1)
-const pageCount = 5
+const q = ref("");
+const page = ref(1);
+const pageCount = 4;
 
-const rows = computed(() => {
-  return people.slice((page.value - 1) * pageCount, (page.value) * pageCount)
-})
+const validPeople = computed(() => people || []);
+watch(
+  () => people,
+  () => {
+    // Update your local data properties here if needed
+  }
+);
 
 //methods
-const q = ref('')
 
-const filteredRows = computed(() => {
-  if (!q.value) {
-    return people
-  }
-
-  return people.filter((person) => {
+const filteredAndPaginatedRows = computed(() => {
+  const filteredPeople = validPeople.value.filter((person) => {
     return Object.values(person).some((value) => {
-      return String(value).toLowerCase().includes(q.value.toLowerCase())
-    })
-  })
-})
+      return String(value).toLowerCase().includes(q.value.toLowerCase());
+    });
+  });
 
-
+  const start = (page.value - 1) * pageCount;
+  const end = page.value * pageCount;
+  return filteredPeople.slice(start, end);
+});
 </script>
 
 <template>
-  <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="w-1/4" color="sky" />
-  <UInput v-model="q" placeholder="Filter people..." class="mt-12 w-1/4" color="sky" />
-  <UTable :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No items.' }"  :columns="selectedColumns" :rows="filteredRows" :sort="{ column: 'firt_name' }" >
-    <template  #actions-header>
-<p>Actions</p>
+  <USelectMenu
+    v-model="selectedColumns"
+    :options="columns"
+    multiple
+    placeholder="Columns"
+    class="w-1/4"
+    color="sky"
+  />
+  <UInput
+    v-model="q"
+    placeholder="Filter people..."
+    class="mt-12 w-1/4"
+    color="sky"
+  />
+  <UTable
+    v-if="filteredAndPaginatedRows.length > 0"
+    :empty-state="{
+      icon: 'i-heroicons-circle-stack-20-solid',
+      label: 'No users available.',
+    }"
+    :columns="selectedColumns"
+    :rows="filteredAndPaginatedRows"
+    :sort="{ column: 'firt_name' }"
+  >
+    <template #actions-header>
+      <p>Actions</p>
     </template>
-    <template #actions-data="{row}" >
+    <template #actions-data="{ row }">
       <UDropdown :items="items(row)">
-        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-        </UDropdown>
-
+        <UButton
+          color="gray"
+          variant="ghost"
+          icon="i-heroicons-ellipsis-horizontal-20-solid"
+        />
+      </UDropdown>
     </template>
-    </UTable>
+  </UTable>
 
-
-  <UPagination v-model="page" :page-count="pageCount" :total="people.length" color="sky" />
+  <UPagination
+    v-model="page"
+    :page-count="pageCount"
+    :total="validPeople.length"
+    color="sky"
+  />
 </template>

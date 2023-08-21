@@ -1,4 +1,5 @@
 <script setup>
+const {appointments} = defineProps(['appointments'])
 const columns = [{
   key: 'id',
   label: 'ID',
@@ -16,66 +17,13 @@ const columns = [{
   key: 'health_care',
   label: 'Health Care',
   sortable: true
-}, 
- {
-  key: 'person',
-  label: 'Person',
-  sortable: true
-},
-{
-  key: 'taken_vaccines',
-  label: 'Taken Vaccines',
-  sortable: true
 },
 {
   key: 'actions'
 }]
 
 const selectedColumns = ref([...columns])
-let appointments = [
-  {id:1,
-    date_of_appointment: "2023-03-15",
-    description: "Routine checkup",
-    health_care: "City Hospital",
-    person: "John Doe",
-    taken_vaccines: "Flu",
-  },
-  {id:2,
-    date_of_appointment: "2023-04-20",
-    description: "Vaccination appointment",
-    health_care: "Community Clinic",
-    person: "Jane Smith",
-    taken_vaccines: "COVID-19",
-  },
-  {id:3,
-    date_of_appointment: "2023-05-10",
-    description: "Health assessment",
-    health_care: "Wellness Center",
-    person: "Michael Johnson",
-    taken_vaccines: "Tetanus",
-  },
-  {id:4,
-    date_of_appointment: "2023-06-25",
-    description: "Follow-up visit",
-    health_care: "City Hospital",
-    person: "Emily Williams",
-    taken_vaccines: "COVID-19, Hepatitis A",
-  },
-  {id:5,
-    date_of_appointment: "2023-07-18",
-    description: "Checkup for allergies",
-    health_care: "Allergy Clinic",
-    person: "Daniel Brown",
-    taken_vaccines: "None",
-  },
-  {id:6,    
-    date_of_appointment: "2023-08-05",
-    description: "Annual physical",
-    health_care: "Community Health Center",
-    person: "Olivia Wilson",
-    taken_vaccines: "Flu",
-  },
-];
+
 const router = useRouter()
 //actions buttons
 const items = (row) => [
@@ -85,7 +33,7 @@ const items = (row) => [
     icon: 'i-heroicons-pencil-square-20-solid',
     click: () => {
       console.log('Edit', row.id)
-router.push(`/users/${row.id}`)
+router.push(`/appointments/${row.id}`)
   }}],[{
     label: 'Delete',
     icon: 'i-heroicons-trash-20-solid',
@@ -99,33 +47,40 @@ router.push(`/users/${row.id}`)
 
 const page = ref(1)
 const pageCount = 5
-
-const rows = computed(() => {
-  return appointments.slice((page.value - 1) * pageCount, (page.value) * pageCount)
-})
-
-//methods
 const q = ref('')
 
-const filteredRows = computed(() => {
-  if (!q.value) {
-    return appointments
+
+
+//methods
+
+const validAppointments = computed(() => appointments || []);
+watch(
+  () => appointments,
+  () => {
+    // Update your local data properties here if needed
   }
+);
 
-  return appointments.filter((appointment) => {
-    return Object.values(appointment).some((value) => {
-      return String(value).toLowerCase().includes(q.value.toLowerCase())
-    })
-  })
-})
+//methods
 
+const filteredAndPaginatedRows = computed(() => {
+  const filteredAppointments = validAppointments.value.filter((appt) => {
+    return Object.values(appt).some((value) => {
+      return String(value).toLowerCase().includes(q.value.toLowerCase());
+    });
+  });
+
+  const start = (page.value - 1) * pageCount;
+  const end = page.value * pageCount;
+  return filteredAppointments.slice(start, end);
+});
 
 </script>
 
 <template>
   <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="w-1/4" color="sky" />
   <UInput v-model="q" placeholder="Filter children..." class="mt-12 w-1/4" color="sky" />
-  <UTable :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No items.' }"  :columns="selectedColumns" :rows="filteredRows" :sort="{ column: 'person' }" >
+  <UTable :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No items.' }"  :columns="selectedColumns" :rows="filteredAndPaginatedRows" :sort="{ column: 'person' }" >
     <template  #actions-header>
 <p>Actions</p>
     </template>
@@ -138,5 +93,5 @@ const filteredRows = computed(() => {
     </UTable>
 
 
-  <UPagination v-model="page" :page-count="pageCount" :total="appointments.length" color="sky" />
+  <UPagination v-model="page" :page-count="pageCount" :total="validAppointments.length" color="sky" />
 </template>

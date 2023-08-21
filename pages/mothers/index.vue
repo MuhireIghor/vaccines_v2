@@ -1,14 +1,13 @@
 <script setup>
 import Table from '../../components/tables/MotherTable.vue'
+import { createMother,getMothers } from '../../services/axios';
+const mothers = ref([]);
+mothers.value = await getMothers()
 const isOpen = ref(false)
 const isError = ref(false)
 const form = ref()
 const state = ref({
-  created_on: '',
-  person: '',
-  taken_vaccines: '',
-  updated_on: '',
-
+  person_id: '',
 })
 onMounted(() => {
   useHead(()=>{
@@ -19,9 +18,10 @@ onMounted(() => {
 })
 //methods
 function handleSubmit(stateData){
+  const formattedData = {...stateData,person_id:parseInt(stateData.person_id)}
 isError.value=false;
-  if(state.value.created_on!= '' && state.value.updated_on!= '' && state.value.person!='' && state.value.taken_vaccines !=''){
-    console.log(`mother created successfully`);
+  if(state.value.person_id != ''){
+   createMother(formattedData)
   }else{
   isError.value = true;
 }
@@ -50,19 +50,10 @@ isError.value=false;
     >
     <p class="text-2xl font-bold">Add Mother</p>
     <p v-if="isError" class="text-[red]">Fill all required fields*</p>
-      <UFormGroup label="Mother Name" name="mname" required >
-        <UInput color="sky" v-model="state.person" />
+      <UFormGroup label="Mother id" name="mid" required >
+        <UInput color="sky" v-model="state.person_id" />
       </UFormGroup>
-      <UFormGroup label="Created On" name="mCreatedOn" required >
-        <UInput color="sky" v-model="state.created_on" type="date" />
-      </UFormGroup>
-      <UFormGroup label="Updated On" name="mUpdatedOn" required >
-        <UInput color="sky" v-model="state.updated_on" type="date" />
-      </UFormGroup>
-      <UFormGroup label="Taken Vaccines" name="mtakenVxs" required >
-        <UInput color="sky" v-model="state.taken_vaccines" />
-      </UFormGroup>
-
+    
       
       
   <div class="w-full flex justify-center">
@@ -75,7 +66,7 @@ isError.value=false;
       </UModal>
   
       <div class="mt-12">
-      <Table/>
+      <Table :mothers = "mothers" />
     </div>
     </div>
   </template>

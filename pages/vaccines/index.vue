@@ -1,6 +1,7 @@
 <script setup>
 import { useVaccineStore } from '../../stores/myStore'
 import Table from '../../components/tables/vaccineTable.vue'
+import { createVaccine, getVaccines } from '../../services/axios';
 
 onMounted(() => {
   useHead(()=>{
@@ -18,17 +19,18 @@ const store = useVaccineStore()
 
 const state = ref({
   category: '',
-  created_on: '',
   expire_date: '',
   name: '',
   period: '',
-  purpose: '',
-  updated_on: '',
+  purpose: ''
 })
 const handleSubmit = (vaxData)=>{
-    console.log('Form Sumbitted',vaxData)
-    store.createVaccine(vaxData)
+  const payloadData = {...vaxData,expire_date:new Date(vaxData.expire_date).toISOString()}
+   createVaccine(payloadData)
+
 }
+let vaccines = ref([])
+vaccines.value = await getVaccines()
 </script>
 <template>
     <div>
@@ -60,14 +62,8 @@ const handleSubmit = (vaxData)=>{
       <UFormGroup label="Purpose" name="purpose" required>
         <UInput color="sky" v-model="state.purpose" type="text" />
       </UFormGroup>
-      <UFormGroup label="Created On" name="createdOn" required>
-        <UInput color="sky" v-model="state.createdOn" type="date" />
-      </UFormGroup>
-      <UFormGroup label="updated On" name="updatedOn" required>
-        <UInput color="sky" v-model="state.updatedOn" type="date" />
-      </UFormGroup>
       <UFormGroup label="Expire Date" name="expireDate" required>
-        <UInput color="sky" v-model="state.expireDate" type="date" />
+        <UInput color="sky" v-model="state.expire_date" type="date" />
       </UFormGroup>
       <UFormGroup label="Period" name="period" required>
         <UInput color="sky" v-model="state.period" type="text" />
@@ -81,7 +77,7 @@ const handleSubmit = (vaxData)=>{
     </UForm>
       </UModal>
       <div class="mt-12">
-<Table />
+<Table :vaccines="vaccines" />
       </div>
     </div>
   </template>

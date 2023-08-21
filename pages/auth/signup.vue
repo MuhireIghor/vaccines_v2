@@ -1,5 +1,5 @@
 <script setup>
-import { createUser } from "../../services/axios";
+import { createPerson } from "../../services/axios";
 
 definePageMeta({
   layout: "auth",
@@ -37,7 +37,7 @@ const districts = [
   "Rusizi",
   "Rutsiro",
 ];
- const router = useRouter();
+const router = useRouter();
 
 //properties
 const form = ref();
@@ -53,72 +53,80 @@ const state = ref({
 
 //methods
 function handleSubmit(state2) {
-const formattedPayload = {...state2,dob:new Date(state2.dob).toISOString()}
-  createUser(formattedPayload);
-  router.push('/');
-  
+  const formattedPayload = {
+    ...state2,
+    dob: new Date(state2.dob).toISOString(),
+  };
+  createPerson(formattedPayload);
+  router.push("/");
 }
 const handleCheckboxChange = (value) => {
   state.value.gender = value;
-}
+};
 </script>
 
 <template>
-    <div class="w-1/3 mx-auto border border-[#0ea5e9] p-4 rounded">
-        <UForm
-          :ref="form"
-          :state="state"
-          @submit.prevent="handleSubmit(state)"
-          class="p-4 space-y-1 w-1/3 "
-        >
-          <p class="text-2xl font-bold text-center">Register</p>
-          <UFormGroup label="First Name" name="fname" required>
-            <UInput color="sky" v-model="state.first_name" />
-          </UFormGroup>
-          <UFormGroup label="Second Name" name="sname" required>
-            <UInput color="sky" v-model="state.second_name" />
-          </UFormGroup>
-          <UFormGroup label="Gender" required v-model="state.gender">
-            <div class="flex gap-12">
-              <UCheckbox
-                color="sky"
-                label="Male"
-                name="gender"
-                :checked="state.gender === 'male'"
-                @change="handleCheckboxChange('male')"
-              />
-              <UCheckbox
-                color="sky"
-                label="Female"
-                name="gender"
-                :checked="state.gender === 'female'"
-                @change="handleCheckboxChange('female')"
-              />
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Date Of Birth" name="dob" required>
-            <UInput color="sky" v-model="state.dob" type="date" />
-          </UFormGroup>
-          <UFormGroup label="Tel" name="tel" required>
-            <UInput color="sky" v-model="state.tel" type="tel" />
-          </UFormGroup>
-          <UFormGroup label="Email" name="email" required>
-            <UInput color="sky" v-model="state.email" type="email" />
-          </UFormGroup>
-          <UFormGroup label="Current Location" name="cloc">
-            <USelectMenu
+  <div class="relative flex-col">
+    <div
+      class="bg-transparent absolute w-3/4 md:w-1/3 bg-white opacity-70 mx-[12%] md:mx-[35%] z-50 border border-[#0ea5e9] p-4 rounded"
+    >
+      <UForm
+        :ref="form"
+        :state="state"
+        @submit.prevent="handleSubmit(state)"
+        class="p-4 space-y-1 w-[90%] md:w-full"
+      >
+        <p class="text-2xl font-bold text-center">Register</p>
+        <UFormGroup label="First Name" name="fname" required>
+          <UInput color="sky" v-model="state.first_name" />
+        </UFormGroup>
+        <UFormGroup label="Second Name" name="sname" required>
+          <UInput color="sky" v-model="state.second_name" />
+        </UFormGroup>
+        <UFormGroup label="Gender" required v-model="state.gender">
+          <div class="flex gap-12">
+            <UCheckbox
               color="sky"
-              v-model="state.current_location"
-              :options="districts"
-              placeholder="Select Current Location"
+              label="Male"
+              name="gender"
+              :checked="state.gender === 'male'"
+              @change="handleCheckboxChange('male')"
             />
-          </UFormGroup>
-          <div class="w-full flex justify-center">
-            <UButton type="submit" color="sky" @click="handleSubmit(state)">
-              Submit
-            </UButton>
+            <UCheckbox
+              color="sky"
+              label="Female"
+              name="gender"
+              :checked="state.gender === 'female'"
+              @change="handleCheckboxChange('female')"
+            />
           </div>
-        </UForm>
-
+        </UFormGroup>
+        <UFormGroup label="Date Of Birth" name="dob" required>
+          <UInput color="sky" v-model="state.dob" type="date" />
+        </UFormGroup>
+        <UFormGroup label="Tel" name="tel" required>
+          <UInput color="sky" v-model="state.tel" type="tel" />
+        </UFormGroup>
+        <UFormGroup label="Email" name="email" required>
+          <UInput color="sky" v-model="state.email" type="email" />
+        </UFormGroup>
+        <UFormGroup label="Current Location" name="cloc">
+          <USelectMenu
+            color="sky"
+            v-model="state.current_location"
+            :options="districts"
+            placeholder="Select Current Location"
+          />
+        </UFormGroup>
+        <div class="w-full flex justify-center">
+          <UButton type="submit" color="sky" @click="handleSubmit(state)">
+            Submit
+          </UButton>
+        </div>
+      </UForm>
     </div>
+    <div class="w-full flex">
+      <img src="../../public/doctor.svg" class="w-[100%] h-[85vh]" />
+    </div>
+  </div>
 </template>
