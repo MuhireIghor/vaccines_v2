@@ -1,0 +1,88 @@
+<script setup>
+import { getIndividualUser,updateUser } from '../../services/axios';
+
+const router = useRoute();
+const isEditable = ref(false);
+const editUser = () => {
+  isEditable.value = true;
+};
+
+const handleSubmit =async (state)=>{
+  try{
+    const {id,person_id,password,username} = state
+    await updateUser({id,person_id,password,username})
+
+  }catch(err){
+    console.log(err)
+  }
+}
+// form props
+
+const form = ref()
+const state = ref()
+
+
+//router params
+const userId = router.params.id;
+const userDetails = await getIndividualUser(userId);
+state.value = {...userDetails}
+console.log(userDetails)
+onMounted(() => {
+  useHead(() => {
+    return {
+      title: ` USER | ${userId}`,
+    };
+  });
+});
+</script>
+<template>
+  <div class="flex flex-col p-12">
+    <h1 class="text-2xl font-bold" v-if="!isEditable">User Details</h1>
+    <template v-if="!isEditable">
+      <div :class="`${!isEditable && 'mt-12'} border-2 p-12 rounded-lg` " >
+        <div class="space-y-4">
+          <p class="font-semibold">Username :<span class="font-light">{{  state.username}}</span></p>
+          <p class="font-semibold">Person id :<span class="font-light">{{  state.person_id}}</span></p>
+          <p class="font-semibold">Id :<span class="font-light">{{ state.id }}</span></p>
+ 
+          <UButton
+      class="mx-auto px-12 "
+      @click="editUser"
+      v-if="!isEditable"
+      color="sky"
+      >Edit</UButton
+    >
+        </div>
+      </div>
+    </template>
+    <template v-else> 
+        <UForm
+    :ref="form"
+    :state="state"
+    @submit.prevent="handleSubmit(state)"
+    class="space-y-2 w-1/2 mx-auto"
+
+  >
+  <p class="text-2xl font-bold">Edit User</p>
+    <UFormGroup label="username" name="uname" required >
+      <UInput color="sky" v-model="state.username" />
+    </UFormGroup>
+    <UFormGroup label="Second Name" name="" reqpiduired >
+      <UInput color="sky" v-model="state.person_id" />
+    </UFormGroup>
+    <UFormGroup label="Password" name="pwd" required>
+      <UInput color="sky" v-model="state.password" type="text" />
+    </UFormGroup>
+
+
+<div class="w-full flex justify-center">
+    <UButton type="submit" color="sky" @click="handleSubmit(state)">
+      Submit
+    </UButton>
+
+</div>
+  </UForm>    
+    </template>
+
+  </div>
+</template>

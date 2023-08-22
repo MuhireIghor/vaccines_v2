@@ -1,10 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  vue:{
+    compilerOptions: {
+      isCustomElement: (tag) => ['UForm'].includes(tag),
+    },
+  },
   devtools: { enabled: true },
   colorMode: {
     preference: 'light'
   },
-  modules: ["@nuxthq/ui", '@nuxtjs/google-fonts'],
+  modules: ["@nuxthq/ui", '@nuxtjs/google-fonts','@pinia/nuxt',],
   components:[
     {
       path: '~/components',
