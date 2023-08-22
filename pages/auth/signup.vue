@@ -58,7 +58,7 @@ function handleSubmit(state2) {
     dob: new Date(state2.dob).toISOString(),
   };
   createPerson(formattedPayload);
-  router.push("/");
+  router.push("/dashboard");
 }
 const handleCheckboxChange = (value) => {
   state.value.gender = value;
