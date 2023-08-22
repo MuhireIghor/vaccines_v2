@@ -64,7 +64,7 @@ const handleRegister = () => {
       >
     </div>
     <div class="basis-1/2 flex justify-end">
-      <img src="../../public/doctor.svg" class="h-[60vh] w-[80%] md:w-full" />
+      <img src="/doctor.svg" class="h-[60vh] w-[80%] md:w-full" />
     </div>
   </div>
   <div class="space-y-6">
@@ -106,7 +106,7 @@ const handleRegister = () => {
     </p>
     <div class="w-full md:flex">
       <div class="basis-1/2 flex justify-center">
-        <img src="../../public/doctor.svg" class="h-[60vh] w-[80%] md:w-full" />
+        <img src="/doctor.svg" class="h-[60vh] w-[80%] md:w-full" />
       </div>
       <div class="basis-1/2">
         <p class="px-4 py-20">
@@ -123,7 +123,7 @@ const handleRegister = () => {
     </div>
   </div>
   <div
-    class=" mt-16 px-12 bg-white space-y-4 sm:space-y-0 sm:flex justify-evenly w-11/12 py-4 mx-auto rounded-t-[40px] border border-slate-200"
+    class=" mt-16 px-12 bg-gradient-to-tr from-cyan-400 via-[#0ea5e9] to-slate-100  space-y-4 sm:space-y-0 sm:flex justify-evenly w-11/12 py-4 mx-auto rounded-t-[40px] border border-slate-200"
   >
     <div class="basis-1/3 space-y-6">
       <div>
@@ -162,22 +162,22 @@ const handleRegister = () => {
     <div class="basis-1/3 space-y-6">
       <div class="space-y-3">
         <div>
-          <p class="font-semibold">Support</p>
+          <p class="font-semibold">Contacts</p>
         </div>
         <div class="space-y-2">
-          <p>Become a member</p>
-          <p>FAQs</p>
-          <p>Become a partner</p>
+          <p class="hover:cursor-pointer">info@gmail.com</p>
+          <p class="hover:cursor-pointer">(+220)-0392-9899</p>
+        
         </div>
       </div>
       <div class="space-y-3">
         <div>
-          <p class="font-semibold">Support</p>
+          <p class="font-semibold">Location</p>
         </div>
         <div class="space-y-2">
-          <p>Become a member</p>
-          <p>FAQs</p>
-          <p>Become a partner</p>
+          <p>KK 16 ,ST Kicukiro ,Niboye</p>
+          <p >Kigali,Rwanda</p>
+
         </div>
       </div>
     </div>
