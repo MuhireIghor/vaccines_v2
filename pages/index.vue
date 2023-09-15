@@ -7,14 +7,21 @@ const router = useRouter();
 const handleRegister = () => {
   router.push("/auth/signup");
 };
+const showDropDown = ref(false);
+const handleShowDropDown = () =>{
+  showDropDown.value = true;
+}
+const handleHideDropDown = ()=>{
+  showDropDown.value = false;
+}
 </script>
 <template>
   <div class="z-20 bg-white shadow p-4 w-full top-[0.5px] sticky flex">
     <div class="basis-1/3 md:basis-1/4">
       <Logo />
     </div>
-    <div class="block md:hidden basis-1/3 flex justify-center">
-      <UIcon class="text-sky-600 text-4xl" name="i-heroicons-clip" />
+    <div class="block md:hidden basis-1/3 flex justify-center hover:cursor-pointer" @click="handleShowDropDown">
+      <UIcon class="text-sky-600 text-4xl" name="i-heroicons-bars-3" />
     </div>
     <div class="justify-evenly basis-2/4 hidden md:flex">
       <p
@@ -36,6 +43,26 @@ const handleRegister = () => {
     <div class="basis-1/4 flex justify-end">
       <UButton @click="handleRegister()" color="sky">Register</UButton>
     </div>
+  </div>
+  <div class="w-full md:hidden block divide-y-2 bg-white space-y-2 border-b-2" v-if="showDropDown">
+    <div class="w-full flex justify-end" @click="handleHideDropDown">
+<UIcon class="text-black-600 text-4xl" name="i-heroicons-stop"  />
+    </div>
+    <p
+        class="font-medium text-lg hover:decoration hover:underline hover:cursor-pointer hover:text-[#0ea5e9]"
+      >
+        Home
+      </p>
+      <p
+        class="font-medium text-lg hover:decoration hover:underline hover:cursor-pointer hover:text-[#0ea5e9]"
+      >
+        About us
+      </p>
+      <p
+        class="font-medium text-lg hover:decoration hover:underline hover:cursor-pointer hover:text-[#0ea5e9]"
+      >
+        Contacts
+      </p>
   </div>
   <div class="pt-12 px-4 md:px-8 md:flex md:flex-row">
     <div class="basis-1/2 space-y-4">
@@ -74,26 +101,26 @@ const handleRegister = () => {
       OUR SERVICES
     </p>
     <div
-      class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 grid-cols-4 gap-12 sm:px-12"
+      class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 sm:px-12"
     >
       <Card
         title="title1"
-        iconsName="i-heroicons-clip"
+        iconsName="i-heroicons-sun"
         desc="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
       />
       <Card
         title="title1"
-        iconsName="i-heroicons-clip"
+        iconsName="i-heroicons-star"
         desc="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
       />
       <Card
         title="title1"
-        iconsName="i-heroicons-clip"
+        iconsName="i-heroicons-swatch"
         desc="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
       />
       <Card
         title="title1"
-        iconsName="i-heroicons-clip"
+        iconsName="i-heroicons-clipboard"
         desc="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
       />
     </div>
