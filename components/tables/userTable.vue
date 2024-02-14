@@ -73,6 +73,7 @@ const filteredAndPaginatedRows = computed(() => {
 </script>
 
 <template>
+  <div>
   <USelectMenu
     v-model="selectedColumns"
     :options="columns"
@@ -117,4 +118,6 @@ const filteredAndPaginatedRows = computed(() => {
     :total="validPeople.length"
     color="sky"
   />
+
+  </div>
 </template>

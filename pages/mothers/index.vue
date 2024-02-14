@@ -1,7 +1,7 @@
 <script setup>
 import Table from '../../components/tables/MotherTable.vue'
 import { createMother,getMothers } from '../../services/axios';
-const mothers = ref([]);
+let mothers = ref([]);
 mothers.value = await getMothers()
 const isOpen = ref(false)
 const isError = ref(false)

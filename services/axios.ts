@@ -1,5 +1,5 @@
 import Instance from 'axios';
-import { User } from 'interfaces/user';
+import type { User } from '@/interfaces/user';
 import { useAppointmentStore, useChildrenSore, useMotherStore, usePersonStore, useVaccineStore } from '../stores/myStore';
 import { createPinia } from 'pinia';
 import { parse } from 'path';
@@ -24,7 +24,9 @@ export function getStatus() {
   return axios.get<StatusResponse>('status')
 }
 export async function createPerson(personPayload: User) {
+
   try {
+    
     const { data } = await axios.post('/persons', personPayload)
     store.loginPerson(data)
     console.log(`person created`, data)
@@ -33,6 +35,7 @@ export async function createPerson(personPayload: User) {
   catch (err) {
     console.log(`error occured ${err}`)
   }
+
 }
 export async function createUser(userPayload: any) {
   try {

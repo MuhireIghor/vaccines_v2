@@ -4,6 +4,7 @@ import { useVaccineStore } from '../../stores/myStore';
 const vxStore = useVaccineStore(pinia)
 import dayjs from 'dayjs'
 import { createPinia } from 'pinia';
+import { definePageMeta } from '#imports';
 const route = useRoute()
 const now = dayjs(dayjs()).format('dddd, MMMM DD');
 const hour = dayjs(dayjs()).format('H')
@@ -26,9 +27,9 @@ useHead(()=>{
         title: `VACCINE | DASHBOARD`
     }
 })
-definePageMeta({
-  middleware:'auth'
-})
+// definePageMeta({
+//   middleware:'auth'
+// })
 </script>
 
 <template>

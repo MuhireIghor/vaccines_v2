@@ -1,8 +1,8 @@
-import { usePersonStore } from "../stores/myStore";
+// import { usePersonStore } from "../stores/myStore";
 
-export default function (){
-    const store = usePersonStore();
-    if(!store.person?.id){
-return navigateTo('/dashboard')
-    }
-}
+// export default function (){
+//     const store = usePersonStore();
+//     if(!store.person?.id){
+// return navigateTo('/dashboard')
+//     }
+// }

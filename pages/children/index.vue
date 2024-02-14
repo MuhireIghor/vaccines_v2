@@ -1,7 +1,7 @@
 <script setup>
 import Table from "../../components/tables/ChildrenTable.vue";
 import {createChild,getChildren} from '../../services/axios'
-const children = ref([])
+let children = ref([])
 children.value =await getChildren()
 
 const isOpen = ref(false);

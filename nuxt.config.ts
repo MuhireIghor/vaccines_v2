@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light'
   },
-  modules: ["@nuxthq/ui", '@nuxtjs/google-fonts','@pinia/nuxt',],
+  // buildModules:['@nuxtjs/composition-api'],
+  modules: ["@nuxt/ui-edge", '@nuxtjs/google-fonts','@pinia/nuxt'],
   components:[
     {
       path: '~/components',
@@ -17,6 +18,7 @@ export default defineNuxtConfig({
     },
   ],
   ui:{
+
     primary:'#266bfc',
     gray:'#eff1f7'
   },

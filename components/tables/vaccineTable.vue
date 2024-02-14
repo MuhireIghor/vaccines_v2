@@ -1,5 +1,5 @@
 <script setup>
-const { vaccines } = defineProps(["vaccines"]);
+let { vaccines } = defineProps(["vaccines"]);
 const columns = [
   {
     key: "id",

@@ -1,5 +1,5 @@
 import { log } from "console"
-import { User } from "interfaces/user"
+import type { User } from "@/interfaces/user"
 import { defineStore } from "pinia"
 import { json } from "stream/consumers"
 import { getUsers } from "../services/axios"
@@ -25,7 +25,7 @@ export const usePersonStore = defineStore('person', () => {
     }
 
   }
-  watch(person, (personval) => localStorage.setItem('person', JSON.stringify(personval)), { deep: true })
+   watch(person, (personval) => localStorage.setItem('person', JSON.stringify(personval)), { deep: true })
 
 
 

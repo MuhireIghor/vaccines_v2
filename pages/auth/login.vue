@@ -1,17 +1,24 @@
 <script setup>
+    const onSubmit = ()=>{
+        console.log("logging in")
+    }
+    const sayHello = ()=>{
+        console.log("helloo==")
+    }
 const userInfo = ref({
     email:'',
     password:''
 })
+
 definePageMeta({
     layout:'auth'
 })
 </script>
 <template>
     <div class="w-full h-[80vh] flex justify-center items-center">
-        <form @submit="onSubmit" class="flex flex-col rounded-lg mdgra p-5 max-w-[500px] md:w-1/2 w-11/12 border-2">
+        <form @submit.prevent="onSubmit" class="flex flex-col rounded-lg mdgra p-5 max-w-[500px] md:w-1/2 w-11/12 border-2">
         <h1 class="text-xl font-semibold relative mx-auto">VACCINE
-            <v-icon size="14" class=" text-[#0ea5e9] absolute right-2 -top-1" icon="fas fa-paper-plane" />
+            <!-- <v-icon size="14" class=" text-[#0ea5e9] absolute right-2 -top-1" icon="fas fa-paper-plane" /> -->
         </h1>
         <h1 class="text-center text-[#0ea5e9] font-semibold text-lg mt-4 ">Log into VACCINE</h1>
         <div class="flex flex-col w-full mt-5">
@@ -28,13 +35,13 @@ definePageMeta({
         </div>
         
         <button 
-            class="bg-[#0ea5e9]  px-6 py-3 text-white rounded-lg mt-8"
+            class="bg-[#0ea5e9]  px-6 py-3 text-white rounded-lg mt-8" type="submit" @click="sayHello"
             >
             Login
         </button>
-        <div className="flex w-full items-center justify-between mt-5">
-            <span>Don't have an account? </span>
-            <RouterLink to="/auth/signup" className="text-[#0ea5e9] underline">Signup</RouterLink>
+        <div class="flex w-full items-center  gap-x-4 mt-5 text-[#0ea5e9]">
+            <span class="">Don't have an account? </span>
+            <RouterLink to="/auth/signup" class="text-[#0ea5e9] underline decoration-slice ">Signup</RouterLink>
         </div>
     </form>
 

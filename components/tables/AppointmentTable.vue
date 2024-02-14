@@ -78,6 +78,8 @@ const filteredAndPaginatedRows = computed(() => {
 </script>
 
 <template>
+  <div>
+
   <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="w-1/4" color="sky" />
   <UInput v-model="q" placeholder="Filter children..." class="mt-12 w-1/4" color="sky" />
   <UTable :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No items.' }"  :columns="selectedColumns" :rows="filteredAndPaginatedRows" :sort="{ column: 'person' }" >
@@ -94,4 +96,5 @@ const filteredAndPaginatedRows = computed(() => {
 
 
   <UPagination v-model="page" :page-count="pageCount" :total="validAppointments.length" color="sky" />
+  </div>
 </template>

@@ -41,6 +41,7 @@ const router = useRouter();
 
 //properties
 const form = ref();
+const isLoading = ref(false);
 const state = ref({
   current_location: "",
   dob: "",
@@ -53,12 +54,15 @@ const state = ref({
 
 //methods
 async function handleSubmit(state2) {
+  isLoading.value = true
+console.log('creating user==')
   const formattedPayload = {
     ...state2,
     dob: new Date(state2.dob).toISOString(),
   };
   createPerson(formattedPayload);
-  await router.push("/dashboard");
+  isLoading.value =false
+  router.push("/dashboard");
 }
 const handleCheckboxChange = (value) => {
   state.value.gender = value;
@@ -119,14 +123,16 @@ const handleCheckboxChange = (value) => {
           />
         </UFormGroup>
         <div class="w-full flex justify-center">
+
           <UButton type="submit" color="sky" @click="handleSubmit(state)">
-            Submit
+            {{ isLoading.value?'Loading...':'Submitsas' }}          
+
           </UButton>
         </div>
       </UForm>
     </div>
     <div class="w-full flex">
-      <img src="../../public/doctor.svg" class="w-[100%] h-[85vh]" />
+      <img src="../../public/doctor.svg" class="w-[100%] max-h-[85vh]" />
     </div>
   </div>
 </template>

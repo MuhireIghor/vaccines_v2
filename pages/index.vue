@@ -5,6 +5,7 @@ definePageMeta({
 });
 const router = useRouter();
 const handleRegister = () => {
+  console.log("navigating..")
   router.push("/auth/signup");
 };
 const showDropDown = ref(false);
@@ -13,6 +14,9 @@ const handleShowDropDown = () =>{
 }
 const handleHideDropDown = ()=>{
   showDropDown.value = false;
+}
+function doSomeThing() {
+  console.log("Here")
 }
 </script>
 <template>
@@ -41,7 +45,7 @@ const handleHideDropDown = ()=>{
       </p>
     </div>
     <div class="basis-1/4 flex justify-end">
-      <UButton @click="handleRegister()" color="sky">Register</UButton>
+      <UButton @click="() => console.log('Here')" color="red">Register</UButton>
     </div>
   </div>
   <div class="w-full md:hidden block divide-y-2 bg-white space-y-2 border-b-2" v-if="showDropDown">

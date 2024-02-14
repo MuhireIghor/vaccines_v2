@@ -11,6 +11,8 @@ watchEffect(() => {
 });
 </script>
 <template>
+  <div>
     <p class="font-semibold text-2xl text-center my-6">WELCOME TO <span class="text-[#0ea5e9] font-semibold">VACCINES</span></p>
   <slot />
+  </div>
 </template>
