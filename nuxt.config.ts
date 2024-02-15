@@ -17,11 +17,10 @@ export default defineNuxtConfig({
      pathPrefix: false,
     },
   ],
-  ui:{
-
-    primary:'#266bfc',
-    gray:'#eff1f7'
-  },
+  // ui:{
+  //   primary:'#266bfc',
+  //   gray:'#eff1f7'
+  // },
   googleFonts: {
     download: true,
     families:{
